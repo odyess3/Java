@@ -11,6 +11,7 @@ public class Code
         boolean k=false;
 
         int Base2 =0;
+        String base="";
 
         System.out.println("Pick a Base number between 2 and 32!");
 
@@ -20,10 +21,12 @@ public class Code
             Base1 =sc.nextInt();
             if (Base1 <= 32 && Base1 >=2) 
             {
+                base = Integer.toString(Base1);
                 g=true;
             }
             else
             {
+                base="";
                 System.out.println("Try Again");
             }
         }
@@ -47,52 +50,106 @@ public class Code
         System.out.println("Now chose a number to convert");
         int num = sc.nextInt();
 
-        covert1(num,Base1);
+        int result =other_ten(Integer.toString(num), Base1);
+        ten_other(result,Base2);
+
+        
 
     }
 
-    public static void covert1 (double  num , double base)
+    // public static void ten_other (double  num , double base)
+    // {
+    //     int Rnum = 0;
+    //     int Tnum=0;
+    //     double remain =0;
+    //     String [] bases = new String [35];
+    //     int id =0;
+
+    //     while (num>0)
+    //     {
+    //         num=num/base;
+    //         Rnum = (int) Math.floor(num);
+    //         System.out.println(Rnum);
+    //         num-=Rnum;
+    //         String Stold = String.valueOf(Rnum*base);
+    //         bases[id++] = Stold;
+    //     }
+    //     print(bases, id);
+    // }    
+    public static int other_ten (String s, int b ) 
     {
-        int Rnum = 0;
-        int Tnum=0;
-        double remain =0;
-        String [] bases = new String [35];
-        int id =0;
 
+        int base = 0, pow = 0;
+        int[] a = new int[s.length()];
 
-        for(int i=0; i<((int) Math.round(base));i++)
+        for (int i = 0; i < s.length(); i++) 
         {
-            num=num/base;
-            Rnum = (int) Math.floor(num);
-            num-=Rnum;
-
-            bases[i] = Rnum*base;
+            a[i] = s.charAt(i) - '0'; //Convert into int array
         }
+
+        for (int i = a.length - 1 ; i >= 0 ; i--) 
+        {
+            base += a[i] * Math.pow(b,pow); //Generalised formula for conversion  
+            pow++;  
+        }
+
+        return base;
         
     }
 
 
-    public static void convert (int num)
+    public static void ten_other (int num , int bA)
     {
         // Creating and assigning binary array size
-        int[] base = new int[35];
+        String[] base = new String[3500];
         int id = 0;
 
         // Number should be positive
         while (num > 0) 
         {
-            base[id++] = num % 2;
-            num = num / 2;
+            base[id++] = Integer.toString(num % bA);
+            num = num / bA;
         }
 
         print(base, id);
     }
 
-    public static void print(int[] binary, int id)
+
+
+    public static void print(String[] binary, int id)
     {
         // Iteration over array
         for (int i = id - 1; i >= 0; i--)
-            System.out.print(binary[i] + "");
+        {
+            if(binary[i].equals("10") )
+            {
+                System.out.print("A ");
+            }
+            else if(binary[i].equals("11") )
+            {
+                System.out.print("B ");
+            }
+            else if(binary[i].equals("12") )
+            {
+                System.out.print("C ");
+            }
+            else if(binary[i].equals("13") )
+            {
+                System.out.print("D ");
+            }
+            else if(binary[i].equals("14") )
+            {
+                System.out.print("E ");
+            }
+            else if(binary[i].equals("15") )
+            {
+                System.out.print("F ");
+            }
+            else
+            {  
+                System.out.print(binary[i] + "");
+            }
+        }
     }
 
 }
