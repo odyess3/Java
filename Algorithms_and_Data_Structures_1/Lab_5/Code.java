@@ -48,7 +48,13 @@ public class Code
         }
 
         System.out.println("Now chose a number to convert");
-        int num = sc.nextInt();
+
+        String Snum = sc.next();
+        int num = Integer.parseInt(Snum);
+        if (num <=0)
+        {
+            num*=-1;
+        }
 
         int result =other_ten(Integer.toString(num), Base1);
         ten_other(result,Base2);
@@ -57,25 +63,7 @@ public class Code
 
     }
 
-    // public static void ten_other (double  num , double base)
-    // {
-    //     int Rnum = 0;
-    //     int Tnum=0;
-    //     double remain =0;
-    //     String [] bases = new String [35];
-    //     int id =0;
-
-    //     while (num>0)
-    //     {
-    //         num=num/base;
-    //         Rnum = (int) Math.floor(num);
-    //         System.out.println(Rnum);
-    //         num-=Rnum;
-    //         String Stold = String.valueOf(Rnum*base);
-    //         bases[id++] = Stold;
-    //     }
-    //     print(bases, id);
-    // }    
+    
     public static int other_ten (String s, int b ) 
     {
 
@@ -123,27 +111,27 @@ public class Code
         {
             if(binary[i].equals("10") )
             {
-                System.out.print("A ");
+                System.out.print("a");
             }
             else if(binary[i].equals("11") )
             {
-                System.out.print("B ");
+                System.out.print("b");
             }
             else if(binary[i].equals("12") )
             {
-                System.out.print("C ");
+                System.out.print("c");
             }
             else if(binary[i].equals("13") )
             {
-                System.out.print("D ");
+                System.out.print("d");
             }
             else if(binary[i].equals("14") )
             {
-                System.out.print("E ");
+                System.out.print("e");
             }
             else if(binary[i].equals("15") )
             {
-                System.out.print("F ");
+                System.out.print("f");
             }
             else
             {  
