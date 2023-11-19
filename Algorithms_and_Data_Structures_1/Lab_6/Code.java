@@ -1,11 +1,15 @@
 package Algorithms_and_Data_Structures_1.Lab_6;
 import java.util.*;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
 
 public class Code 
 {
     public static void main(String[] args) 
     {
+        final long startTime = System.nanoTime();
+
         int total=0;
         Scanner sc = new Scanner(System.in);
         int wordNo =sc.nextInt();
@@ -55,9 +59,8 @@ public class Code
 
         sort(postiton, words);
 
-        
-
-
+        final long dur = System.nanoTime()-startTime;
+        //System.out.println(dur/1000000000);
 
     }
 
@@ -108,7 +111,7 @@ public class Code
             }
             else
             {
-                System.out.println(realarray[k]);
+               // System.out.println(realarray[k]);
                 System.out.println(arrayName[k]);
             }
             
