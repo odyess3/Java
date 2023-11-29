@@ -1,4 +1,4 @@
-package Algorithms_and_Data_Structures_1.Lab_7;
+package Lab_7;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -24,25 +24,21 @@ public class Code {
                 if (input[i].contains("INSERT") ) 
                 {
                     queue.inQueue(input[i].substring(7));
-                   // System.out.println(i+". "+input[i]);
+                    System.out.println(i+". "+input[i]);
                 }
                 else
                 {
-                    System.out.println(i+". Deleted "+queue.peak());
+                    System.out.println(i+". Deleted    "+queue.peak());
                     queue.outQuene();
                 }
-
-                
-                
-
             }
             scan.close();
         } catch (Exception e) {
             System.err.println(e);
         }
 
-        queue.outQuene();
-        queue.show();
+       // queue.outQuene();
+        //queue.show();
         
 
     }

@@ -1,4 +1,4 @@
-package Algorithms_and_Data_Structures_1.Lab_7;
+package Lab_7;
 
 public class Queue 
 {
@@ -6,6 +6,7 @@ public class Queue
     int size;
     int front;
     int rear;
+    int nItems;
 
     public void inQueue (String data)
     {
@@ -38,6 +39,8 @@ public class Queue
         String data = queue[front];
         return data;
     }
+
+    
 
 
 }
