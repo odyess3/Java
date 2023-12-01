@@ -1,121 +1,64 @@
 package Lab_8;
-import java.util.*;
 
-public class Queue 
+public  class Queue
 {
     private int maxSize;
-    private String [] queArray;
+    private String[] queArray;
     private int front;
     private int rear;
     private int nItems;
 
-    public Queue(int s)
-    {
-        maxSize =s;
+    public Queue(int s) 
+    { // constructor
+
+        maxSize = s;
         queArray = new String[maxSize];
         front = 0;
         rear = -1;
         nItems = 0;
     }
 
-    // public void  inQueue (String  item)
-    // {
-    //     if(nItems < maxSize){
-
-    //         //elements[positionToInsert] = item;
-    //         if(nItems == 0){
-    //             queArray[0] = item;
-    //         }
-    //         else{
-    //             String [] elements2= new String[maxSize];
-    //             elements2[0]=item;
-
-    //             for(int i = 0; i < nItems; i++){
-    //                 elements2[i+1] = queArray[i];
-    //             }
-    //             queArray = elements2;
-    //         }
-
-    //         nItems++;
-    //     }
-    // }
-
-    public boolean inQueue (String j)
-    {
-        if (isFull())
-        {
-            return false;
-        }
-        if (rear==maxSize-1)
-        {
-            rear=-1;
-        }
+    public boolean inQueue(String j) 
+    { // put item at rear
+        if(isFull()) return false; //don’t remove if full
+        if(rear == maxSize-1) // deal with wraparound
+        rear = -1;
         rear++;
-        queArray[rear] = j;
-        nItems++;
-        return true;
+        queArray[rear] = j; // increment rear and insert
+        nItems++; // one more item
+        return true; //successfully inserted
     }
 
-    public String outQuene()
-    {
-        if(isEmpty())
-        {
-            return null;
-        }
-        String temp = queArray[front];
+    public String outQuene() 
+    { // take item from front
+        if(isEmpty()) return null; //don’t remove if empty
+        String temp = queArray[front];// get value, incr front
         front++;
-        if(front ==maxSize)
-        {
-            front =0;
-        }
-        nItems--;
+        if(front == maxSize) // deal with wraparound
+        front = 0;
+        nItems--; // one less item
         return temp;
-        
     }
-    
-    // public void insert(String item) 
-    // {
-    //     size=size+1;
-    //         int j = rear;
-
-    //         while (j>0 &&  (queue[j-1].compareTo(item) > 0))
-    //         {
-    //             queue[j] = queue[j-1];
-    //             j--;
-    //         }
-    //         queue[j] = item;
-    //         rear = (rear +1)%1000;
-            
-    // }
-
-    
 
     public String peak()
-    {
+    { // peek at front of queue
         return queArray[front];
     }
 
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() 
+    { // true if queue is empty
         return (nItems==0);
     }
 
-    public boolean isFull()
-    {
-        return (nItems==maxSize);
+    public boolean isFull() 
+    { // true if queue is full
+    return (nItems==maxSize);
     }
 
-    public int size()
-    {
-        return nItems;
+    public int size() 
+    { // number of items in queue
+    return nItems;
     }
 
-    public int Front()
-    {
-        return front;
-    }
-
-   
-
-
+    
 }

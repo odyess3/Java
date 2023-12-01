@@ -7,9 +7,9 @@ import java.util.Scanner;
 public class Code {
     public static void main(String[] args) 
     {
-        Queue  queue = new Queue(1000); 
+        Queue  queue = new Queue(999); 
             
-        File file = new File("D:\\Download\\queue.txt");
+        File file = new File("D:\\Download\\queue (1).txt");
 
         int k=0;
         
@@ -40,25 +40,20 @@ public class Code {
         
         for (int i=0; i<inputSize; i++)
         {
-            if (input[i].contains("INSERT") ) 
-                {
-                    for(int j=7; j<input[i].length(); j++)
-                    {
-                        if("aeiou".contains(Character.toString(input[i].charAt(j))))
-                        {
-                            ;
-                        }
-                    }
-                    queue.inQueue(input[i].substring(7));
-                    //System.out.println(i+". "+input[i]+ "   "+ vowels[i] );
-                }
+            String item = input[i];
+            String[] splits = item.split("\\s+");
+            String command = splits[0];
+
+            if (command.contains("INSERT") ) 
+            {
+                String value = splits[1];
+                queue.inQueue(value);
+            }
 
             else if (input[i].contains("REMOVE")) 
             {
-                //System.out.println(i+". Deleted    "+queue.peak());
                 queue.outQuene();
             }
-
 
             if((input[i].contains("PEEK")))
             {
@@ -71,8 +66,7 @@ public class Code {
                         total[k]++;
                     }
                 }
-
-               // System.out.println(peeks[k]+" "+total[k]);
+                System.out.println(peeks[k]+" "+total[k]);
                 k++;
             }
 
