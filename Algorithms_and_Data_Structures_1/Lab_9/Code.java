@@ -1,164 +1,206 @@
-package Lab_9;
+import java.util.*;
+import java.io.*;
+public class Code
+{
 
-import java.util.*; 
-import java.io.*; 
+    public static void main (String[] args)
+    {
+        File file = new File("D:\\Download\\HashTable.txt");
+
+    int inputSize = 90000;
+    String[] input = new String[inputSize];
+    try 
+    {
+        Scanner scan = new Scanner(file);
+
+        for(int i = 0; i < inputSize; i++) 
+        {
+            input[i] = scan.nextLine();
+        }
+    scan.close();
+    } 
+    
+    catch (Exception e) 
+    {
+        System.err.println(e);
+    }
+    int size=99991;
+    Solution mysolution = new Solution();
+    String[] hashtable=mysolution.fill(size, input);
+    HashTable mytable = new HashTable(hashtable);
+    Solution mysolution2 = new Solution(); //prevents cheating  by using memory
+
+    for(int i=0;i<inputSize;i++)
+    {
+        int rand = (int)(Math.random()*inputSize);
+        String temp = input[i];
+        input[i]=input[rand];
+        input[rand]=temp;
+    }
+
+    int total=0;
+    for(int i=0;i<inputSize;i++)
+    {
+        int slot = mysolution2.find(size, mytable, input[i]);
+        if(!hashtable[slot].equals(input[i]))
+        {
+            System.out.println("error!");
+        }
+    }
+    long status=mytable.gettotal();
+    System.out.println("Collisions: " + status);
+    }
+
+}
 
 
 class HashTable
-{ 
-    
-    private String[] hashTable; 
-    private long total=0; 
+{
 
+    private String[] hashTable;
+    private long total=0;
     public HashTable(String[] input)
-    { 
-        hashTable = input; 
-    } 
+    {
+        hashTable = input;
+    }  
 
     public boolean check(int slot, String check)
-    { 
+    {
         if(hashTable[slot].equals(check))
-        { 
-            return true; 
+        {
+            return true;
         }
-        
-        else
-        { 
-            total++; 
-            return false; 
-        } 
-    } 
     
-    public long gettotal()
-    { 
-        return total; 
-    } 
-}  
+        else
+        {
+            total++;
+            return false;
+        }
+    }
 
+    public long gettotal()
+    {
+        return total;
+    }
+}
 
 class Solution
-{ 
-    
+{
+
     public int find(int size, HashTable mytable, String word)
-    { 
-        
-        //fill this in so as to minimize collisions 
-        //takes in the HashTable object and the word to be found 
-        //the only thing you can do with the HashTable object is call "check" 
-        //this method should return the slot in the hashtable where the word is 
-        
+    {
         int pos = Function(word,size);
 
-        while(mytable.check(pos, word))
+        while(!mytable.check(pos, word))
         {
-            if(mytable.check(pos, word) )
-            {
-                return pos;
-            }
-            pos = (pos+1) %size;
-            
+        
+            pos = (pos+jump(word, size)) %size;
+
         }
 
+        if(mytable.check(pos, word))
+        {
+            return pos;
+        }
 
-        return -1; 
-    } 
-    
+    //fill this in so as to minimize collisions
+    //takes in the HashTable object and the word to be found
+    //the only thing you can do with the HashTable object is call "check"
+    //this method should return the slot in the hashtable wherethe word is
+    return 0;
+    }
+
     public String[] fill(int size, String[] array)
-    { 
-        
-        //takes in the size of the hashtable, and the array of Strings to be placed in the hashtable 
-        //this should add all the words into the hashtable using some system 
-        //then it should return the hashtable array 
-        String[] hashTable = new String[size]; 
+    {
+        String[] hashtable = new String[size];
+        for (String word  : array) 
+        {
+            int pos = Function(word,size);
 
-
-            
-            for (String word  : array) 
+            while (hashtable[pos] != null) 
             {
-                int pos = Function(word,size);
-
-                while (hashTable[pos] != null) 
-                {
-                    pos = (pos+1) %size;
-                    
-                }
-
-                hashTable[pos] = word;
+                pos = (pos+jump(word, size)) %size;    
             }
 
-            return hashTable;
+            hashtable[pos] = word;
 
-            // int hashi = (Math.floorMod(hash.hashCode(),90000));
+        }
 
-            // hashtable[i]=Integer.toString(hashi); 
-            
-            // while (hashtable[hashi] == null) 
-            // {
-            //     hashi++;
-            //     hashi%= size;
-            // }
+        return hashtable;
+
+    //takes in the size of the hashtable, and the array of Strings to be placed in the hashtable
+    //this should add all the words into the hashtable usingsome system
+    //then it should return the hashtable array
+
+    // for(int i=0;i<size;i++)
+    // {
+    //     hashtable[i]="";
+    // }
+    // return hashtable;
     }
     
     public int Function(String key, int size)
     {
         int num =0;
+        int i=0;
+
+        // for(int i=0; i<key.length(); i++)
+        // {
+        //     char c = key.charAt(i);
+        //     num += ((int)(c-96)*Math.pow(3, i));  
+        // }
+
         for (char c : key.toCharArray())
         {
-            num += (int) c;
+            num += ((int)(c-96)*Math.pow(5, i++));
         }
-        return num %size;
+        i =0;
+        return num%size ;
     }
-} 
 
+    public int jump (String key, int size)
+    {
+        int num =0;
+        int i=0;
+        int end=0;
 
-public class Code
-{     
-    public static void main (String[] args)
-    { 
-        File file = new File("D:\\Download\\HashTable.txt"); 
-        
-        int inputSize = 90000; 
-        String[] input = new String[inputSize]; 
-        try 
-        { 
-            Scanner scan = new Scanner(file); 
-            
-            for(int i = 0; i < inputSize; i++) 
-            { 
-                input[i] = scan.nextLine(); 
-            } 
-            scan.close(); 
+        // for(int i=0; i<key.length(); i++)
+        // {
+        //     char c = key.charAt(i);
+        //     num += ((int)(c-96)*Math.pow(3, i));  
+        // }
+
+        for (char c : key.toCharArray())
+        {
+            num += ((int)(c)*Math.pow(3, i++));
+            end += num%size*i;
         }
-        catch (Exception e) 
-        { 
-            System.err.println(e); 
-        }  
-        int size=99991; 
-        Solution mysolution = new Solution(); 
-        String[] hashtable=mysolution.fill(size, input); 
-        HashTable mytable = new HashTable(hashtable); 
 
-        for(int i=0;i<inputSize;i++)
-        { 
-            int rand = (int)(Math.random()*inputSize); 
-            String temp = input[i]; 
-            input[i]=input[rand]; 
-            input[rand]=temp; 
-        } 
+        double k= end-(num%end);
+        
+        return  (int) k;
+    }
+}
 
-        int total=0; 
-        for(int i=0;i<inputSize;i++)
-        { 
-            int slot = mysolution.find(size, mytable, input[i]); 
 
-            if(slot != -1 && !hashtable[slot].equals(input[i]))
-            { 
-                System.out.println("error! "); 
-            }
+// public int jump (String key, int size)
+//     {
+//         int num =0;
+//         int i=0;
+//         int end=0;
 
-        } 
-        long status=mytable.gettotal(); 
-        System.out.println("Collisions: " + status); 
-    } 
-    
-} 
+//         // for(int i=0; i<key.length(); i++)
+//         // {
+//         //     char c = key.charAt(i);
+//         //     num += ((int)(c-96)*Math.pow(3, i));  
+//         // }
+
+//         for (char c : key.toCharArray())
+//         {
+//             num += ((int)(c)*Math.pow(3, i++));
+//             end = num%size;
+//         }
+
+//         i =0;
+        
+//         return 27033-(num%27033)
