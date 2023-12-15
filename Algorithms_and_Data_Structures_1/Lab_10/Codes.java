@@ -1,11 +1,10 @@
 import java.util.*;
 import java.io.*;
 
-public class Codes 
-{
+public class Codes {
 
     public static void main(String[]args) {
-        File file = new File("C:\\Users\\naomi\\Downloads\\Maze1.txt");
+        File file = new File("D:\\Download\\Maze2.txt");
 
         int lives = 200;
         int posX = 0;
