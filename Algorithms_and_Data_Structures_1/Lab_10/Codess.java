@@ -1,9 +1,9 @@
 import java.util.*;
 import java.io.*;
 
-public class Codess {
+public class Codesws {
     public static void main(String[] args) {
-        File file = new File("D:\\Download\\Maze2.txt");
+        File file = new File("D:\\Download\\Maze5.txt");
 
         int lives = 200;
         int posX = 0; // Starting X position

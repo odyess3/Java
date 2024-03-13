@@ -1,0 +1,125 @@
+.triangle
+{
+    position: relative;
+    height: auto;
+    clip-path: polygon(50% 0, 10% 100%, 90% 100%);
+    
+}
+
+.triangle div
+{
+    width: 100%;
+    height: auto;
+    color: white;
+    text-align: center;
+    font-size: 0.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+
+
+.but, .count
+{
+    background-color: gray; 
+    color: white;
+    padding: 4px 10px;
+    text-decoration: none;
+    font-size: 20px;
+    border-radius: 50%;
+    border-color: black;
+    
+}
+
+
+#lvl6 ,#lvl5
+{
+    margin: 0 auto 10px;
+}
+
+#lvl6
+{
+    background:rgb(241, 92, 92);
+    height: 120px;
+}
+
+#lvl5
+{
+    background:rgb(228, 180, 92);
+    height: 120px;
+}
+
+#lvl4
+{
+    background:yellow;
+    height: 120px;
+}
+
+#lvl3
+{
+    background:blue;
+    height: 120px;
+}
+
+#lvl2
+{
+    background:brown;
+    height: 120px;
+}
+
+#lvl1
+{
+    background:rgb(0, 112, 0);
+    height: 120px;
+}
+
+.circles 
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.circles div
+{
+    height: 50px;
+    width: 100px;
+    border-radius: 50px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 50px;
+}
+
+#circle1
+{
+    background-color:orange;
+}
+#circle2
+{
+    background-color:green;
+}
+#circle3
+{
+    background-color: red;
+}
+
+#texts
+{
+    display: inline;
+}
+
+#under 
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 50px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+

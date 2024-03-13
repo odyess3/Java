@@ -1,0 +1,140 @@
+*
+{
+    font-family: 'Orbitron';
+}
+
+.container 
+{
+    width: 600px;
+    height: 600px;
+    position: relative;
+    padding: 60px;
+    display: inline-block;
+}
+
+#circle1
+{
+    border-radius: 50%;
+    background-color:black;
+    margin-left: 600px ;
+    width: 600px;
+    height: 600px;
+    margin-top: 110px;
+    text-align: center;
+}
+
+.SC
+{
+    border-radius: 50%;
+    width: 280px;
+    height: 280px;
+    display: inline-block;
+    border-width: 0px;
+    box-shadow: 0 4px 10px black, inset 0 4px 5px white;
+    
+}
+
+.Under
+{
+    background-color: black;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    border-width: 0px;
+    box-shadow: 0 4px 10px black, inset 0 4px 5px white;
+    z-index: -2;
+}
+
+
+#Ucircle2
+{
+    position:absolute;
+    left: 500px;
+    bottom: 570px;
+}
+
+#circle2
+{
+    background-color: rgb(3, 109, 3);
+    position: relative;
+    left: 500px;
+    bottom: 650px;
+}
+
+#Ucircle3
+{
+    position:absolute;
+    left: 1033px;
+    bottom: 570px;
+}
+
+#circle3
+{
+    background-color: rgb(148, 0, 0);
+    position: relative;
+    bottom: 650px;
+    left: 750px;
+}
+
+#Ucircle4
+{
+    position:absolute;
+    left: 470px;
+    bottom: 170px;
+}
+
+
+#circle4
+{
+    background-color: rgb(151, 151, 0);
+    position: relative;
+    bottom: 250px;
+    right: 100px;
+}
+
+#Ucircle5
+{
+
+    position:absolute;
+    left: 1010px;
+    bottom: 170px;
+}
+
+#circle5
+{
+    background-color: rgb(3, 3, 133);
+    position: relative;
+    bottom: 250px;
+    left: 160px;
+}
+
+.but
+{
+    background-color: grey;
+    color: black;
+    margin: 0 5px;
+    text-decoration: none;
+    font-size: 50px;
+    width: 200px;
+    margin-top: 270px;
+    border-radius: 10%;
+}
+
+#go
+{
+    background-color: rgb(148, 1, 1);
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    margin-top: 60px;
+    margin-left: 295px;
+    display: flex;
+}
+
+#number
+{
+    size: 1000px;
+}
+
+

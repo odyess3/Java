@@ -103,3 +103,20 @@ public  class QueueC
 }
 
     
+
+
+
+
+public static int there (String  in)
+{
+    boolean [] ar1 = new boolean[100];
+    for(int i=0; i<ar1.length; i++)
+    {
+        ar1[in.charAt(i)]=true;
+    }
+
+    int count =0;
+
+    for(int i; i<in.length(); )
+
+}
