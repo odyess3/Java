@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>assignemt 4 CRUD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <style>
+        .h1 {
+            font: 30px Verdana;
+            text-align: center;
+        }
+
+        .h2 {
+            font: 15px Verdana;
+            text-align: center;
+        }
+
+        .UserDatas {
+            border: 1px solid rgb(172, 172, 172);
+            padding: 10px;
+            font: 15px Verdana;
+            text-align: center;
+        }
+
+        legend {
+            padding: 10px;
+            font-size: 30px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1 class="h1">Assignment 4</h1>
+
+    <form id="userForm">
+        <div class="container">
+            <div class="UserData">
+                <legend>Add A User To The Database</legend>
+                <div class="UserDatas">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Title</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="radio" id="Mx" name="Title" value="Mx">
+                                <label for="Mx">Mx</label>
+                                <input type="radio" id="Ms" name="Title" value="Ms">
+                                <label for="Ms">Ms</label>
+                                <input type="radio" id="Mr" name="Title" value="Mr">
+                                <label for="Mr">Mr</label>
+                                <input type="radio" id="Mrs" name="Title" value="Mrs">
+                                <label for="Mrs">Mrs</label>
+                                <input type="radio" id="Miss" name="Title" value="Miss">
+                                <label for="Miss">Miss</label>
+                                <input type="radio" id="Dr" name="Title" value="Dr">
+                                <label for="Dr">Dr</label><br>
+                                <input type="radio" id="Other" name="Title" value="Other">
+                                <label for="Other">Other</label>
+                                <input type="text" id="OtherTitle" name="OtherTitle" style="display:none;"><br>
+                                <input type="text" id="Title" name="Title" style="display:none;"><br>
+                                <br>
+                            </div>
+                        </div>
+                        
+                        <script>
+                        document.getElementById('Other').addEventListener('change', function () {
+                            document.getElementById('OtherTitle').style.display = this.checked ? 'block' : 'none';
+                        });
+                        
+                        // Listen for changes on the radio buttons
+                        $('input[type=radio][name=Title]').change(function() {
+                            // Update the hidden text input field with the value of the selected radio button
+                            $('#Title').val(this.value);
+                        });
+                        </script>
+
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="firstName">First_Name*</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="firstName" name="FirstName" placeholder="First Name" required>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="firstName">Surname*</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="surname" name="Surname" placeholder="Surname" required>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="mobile">Mobile*</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="mobile" name="Mobile" placeholder="Mobile" required>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="email">Email*</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="email" id="email" name="Email_Address" placeholder="Email"required>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="homeAddressLine1">Home_Address_Line_1*</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="homeAddressLine1" name="Home_Address_Line1" placeholder="Home_Address_Line_1" required>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="homeAddressLine2">Home_Address_Line_2</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="homeAddressLine2" name="Home_Address_Line2" placeholder="Home_Address_Line_2">
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="homeTown">Home_Town*</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="homeTown" name="Home_Town" placeholder="Home_Town" required>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="homeCity">Home_County_City*</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="homeCity" name="Home_City" placeholder="Home_County_City" required>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="homeEircode">Home_Eircode</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="homeEircode" name="Home_Eircode" placeholder="Home_Eircode">
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="shippingAddressLine1">Ship_Address_Line_1*</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="shippingAddressLine1" name="Shipping_Address_Line1" placeholder="Ship_Address_Line_1" required>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="shippingAddressLine2">Ship_Address_Line_2</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="shippingAddressLine2" name="Shipping_Address_Line2" placeholder="Ship_Address_Line_2">
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="shippingTown">Ship_Town*</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="shippingTown" name="Shipping_Town" placeholder="Ship_Town" required>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="shippingCity">Ship_County_City*</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="shippingCity" name="Shipping_City" placeholder="Ship_County_City" required>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="shippingEircode">Ship_Eircode</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" id="shippingEircode" name="Shipping_Eircode" placeholder="Ship_Eircode">
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-primary">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <br>
+    <br>
+
+
+    <div class="container">
+        <div class="ShowUserData">
+            <legend>Show User Database</legend>
+            <div class="UserDatas">
+                <div class="form-group row">
+
+                    <label class="col-sm-2 col-form-label">User Database</label>
+                    <div class="col-sm-10">
+                        <textarea id="userDatabase" class="form-control" style="height: 100px;">Retrieved Database displayed here!</textarea>
+                    </div>
+
+                </div>
+
+                <!-- Submit -->
+                <div class="form-group">
+                    <button id="getUserDatabaseBtn" class="btn btn-primary">Get User Database</button>
+                    <!-- <input type="submit" value="Get User Database" class="btn btn-primary"> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <script>
+            $(document).ready(function () {
+                $('#userForm').submit(function (e) {
+                    e.preventDefault(); // Prevent the default form submission
+
+                    var formData = {
+                        Title: $('#Title').val(), // Collects all checked titles
+                        First_Name: $('#firstName').val(),
+                        Surname: $('#surname').val(),
+                        Mobile: $('#mobile').val(),
+                        Email: $('#email').val(),
+                        Home_Address_Line_1: $('#homeAddressLine1').val(),
+                        Home_Address_Line_2: $('#homeAddressLine2').val(),
+                        Home_Town: $('#homeTown').val(),
+                        Home_County_City: $('#homeCity').val(),
+                        Home_Eircode: $('#homeEircode').val(),
+                        Ship_Address_Line_1: $('#shippingAddressLine1').val(),
+                        Ship_Address_Line_2: $('#shippingAddressLine2').val(),
+                        Ship_Town: $('#shippingTown').val(),
+                        Ship_County_City: $('#shippingCity').val(),
+                        Ship_Eircode: $('#shippingEircode').val()
+                    };
+
+
+                    console.log(formData);
+
+                    // AJAX request
+                    $.ajax({
+                        url: 'http://localhost:8800/USERdata',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(formData),
+                        success: function (response) {
+                            console.log(response);
+                            alert('Data sent successfully!');
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                            alert('An error occurred.');
+                        }
+                    });
+
+                    $.ajax({
+                        url: 'http://localhost:8800/USERaddress',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(formData),
+                        success: function (response) {
+                            console.log(response);
+                            alert('Data sent successfully!');
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                            alert('An error occurred.');
+                        }
+                    });
+
+
+
+                });
+            });
+
+            $(document).ready(function () {
+                $('#getUserDatabaseBtn').click(function () {
+                    $.ajax({
+                        url: 'http://localhost:8800/USERdata',
+                        type: 'GET',
+                        success: function (response) {
+                            var formattedJson = JSON.stringify(response, null, 2);
+                            $('#userDatabase').val(formattedJson);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                            alert('An error occurred.');
+                        },
+                        complete: function() {
+                            // Second AJAX request
+                            $.ajax({
+                                url: 'http://localhost:8800/USERaddress',
+                                type: 'GET',
+                                success: function (response) {
+                                    var formattedJson = JSON.stringify(response, null, 2);
+                                    // Append to the textarea
+                                    $('#userDatabase').val($('#userDatabase').val() + '\n' + formattedJson);
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error(error);
+                                    alert('An error occurred.');
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
+</body>
+
+</html>

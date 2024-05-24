@@ -3,13 +3,80 @@
     font-family:"sans-serif";
 }
 
-.table 
+
+#TABLE
 {
+    border: 1px solid black;
     border-collapse: collapse;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%; 
+
 }
 
-.tableRows
+
+th
 {
-    align-items: "center";
+    background-color: #606060;
+    text-align: center;
+    width: 200px; 
+    height: 50px;
 }
 
+tr:nth-child(even)
+{
+    background-color: #808080;
+    height: 50px;
+}
+
+tr:nth-child(odd)
+{
+    background-color: #C0C0C0;
+    height: 50px;
+}
+
+tr:nth-child(1)
+{
+    text-align: left;
+}
+
+tr:nth-child(2)
+{
+    text-align: left;
+}
+
+td:nth-child(n+3)
+{
+    text-align: center;
+}
+
+td:nth-child(8)
+{
+    text-align: right;
+}
+
+#submmited
+{
+    margin-top: 60px;
+    margin-left: 840px;
+    display: flex;
+    text-align: center;
+    font-size: 20px;
+}
+
+
+.button ,#un-submmited
+{
+    text-align: center;
+    padding: 10px;
+    
+}
+
+#BUTTONS
+{
+    margin-top: 60px;
+
+    text-align: center;
+    font-size: 20px;
+}

@@ -1,0 +1,2 @@
+npm start on server, then on client
+make sure to cd em.

@@ -1,0 +1,15 @@
+[{
+  "_id": {
+    "$oid": "66407ca36ecb7dc2ec3eff11"
+  },
+  "contractDate": {
+    "$date": "2024-05-03T00:00:00.000Z"
+  },
+  "address": "qwrqw",
+  "tenant": "ody",
+  "landlordemail": "odyess3@gmail.com",
+  "Doornumber": "23",
+  "Contract": "Year",
+  "House": "Other",
+  "__v": 0
+}]

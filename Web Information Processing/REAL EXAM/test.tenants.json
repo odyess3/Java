@@ -1,0 +1,101 @@
+[{
+  "_id": {
+    "$oid": "664043d231756d66a4404fb0"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640444531756d66a4404fb2"
+  },
+  "__v": 0,
+  "address1": "18 Suncroft Park Jobstown D24",
+  "address2": "32rpih2g",
+  "city": "Dublin 24",
+  "eircode": "q5;ljghb",
+  "email": "odyess3@gmail.com",
+  "name": "Ody",
+  "phone": "0833949462",
+  "surname": "Nwagwu",
+  "title": "Mr",
+  "town": "Dublin 24"
+},
+{
+  "_id": {
+    "$oid": "6640446531756d66a4404fb4"
+  },
+  "name": "Ody",
+  "__v": 0,
+  "address1": "18 Suncroft Park Jobstown D24",
+  "city": "Dublin 24",
+  "eircode": "3f",
+  "email": "odyess3@gmail.com",
+  "phone": "0833949462",
+  "surname": "Nwagwu",
+  "title": "Mr",
+  "town": "Dublin 24"
+},
+{
+  "_id": {
+    "$oid": "66407486a1d2360a36ef735b"
+  },
+  "title": "Mrs",
+  "name": "Odinakachukwu",
+  "surname": "nwagwu",
+  "phone": "0865585588",
+  "email": "odyess3@gmail.com",
+  "address1": "18 Suncroft Park Jobstown D24",
+  "address2": "EFW",
+  "town": "Dublin 24",
+  "city": "Dublin 24",
+  "eircode": "ewg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640748da1d2360a36ef735e"
+  },
+  "title": "Mrs",
+  "name": "OdinakaWRGchukwu",
+  "surname": "nwagwu",
+  "phone": "0865585588",
+  "email": "ewrqwr@gmail.com",
+  "address1": "18 Suncroft Park Jobstown D24",
+  "address2": "EFW",
+  "town": "Dublin 24",
+  "city": "Dublin 24",
+  "eircode": "ewg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640749ba1d2360a36ef7361"
+  },
+  "title": "Mrs",
+  "name": "wge",
+  "surname": "EGW",
+  "phone": "436",
+  "email": "ewg@gmail.com",
+  "address1": "EGW",
+  "address2": "EFW",
+  "town": "Dublin 24",
+  "city": "Dublin 24",
+  "eircode": "ewg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "664074b0a1d2360a36ef7364"
+  },
+  "title": "Mx",
+  "name": "efkPE;QG",
+  "surname": "A[WGR#N",
+  "phone": "-2453",
+  "email": "adqef@gmial.ocm",
+  "address1": "eWG",
+  "address2": "Q34Y",
+  "town": "wge",
+  "city": "EWG",
+  "eircode": "EG",
+  "__v": 0
+}]

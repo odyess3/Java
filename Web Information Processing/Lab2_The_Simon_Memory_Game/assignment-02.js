@@ -25,7 +25,8 @@ document.getElementById("middle").onclick=function()
         next = true;
     }
 }
- 
+
+
 function start() 
 {
     setTimeout(function() 
@@ -67,7 +68,6 @@ $(".SC").click(function() // the button i clicked
     }
     
 
-
     var pickcircle = $(this).attr("id"); // gets the id of the button i clicked
     Userpattern.push (pickcircle);
 
@@ -88,6 +88,7 @@ function startTimer()
         }
     }, 1000); // Update timer every second (1000 milliseconds)
 }
+
 
 function updateTimerDisplay() 
 {
@@ -117,6 +118,7 @@ function correct(level)
         Over();
     }
 }
+
 
 function Next()
 {

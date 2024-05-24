@@ -1,0 +1,466 @@
+//import cors from "cors";
+const readline = require('readline');
+const mongoose = require('mongoose');
+const express = require('express');
+const { MongoClient, ObjectId } = require('mongodb');
+
+const app = express();
+
+const Url=
+"mongodb+srv://Uzi:sEdQcEzUM9Iicxpk@onlinestoredb.hu7v2bz.mongodb.net/Node-API?retryWrites=true&w=majority&appName=OnlineStoreD";
+
+const client = new MongoClient(Url);
+
+app.use(express.json());
+//app.use(cors());
+
+// Connect to the mongo
+async function connect() {
+    try{
+        await mongoose.connect(Url)
+        console.log("Connected to MongoDB");
+        // to start
+        askOperation();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Create readline interface
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+// Function to execute a query
+const executeQuery = (query, values) => {
+    return new Promise((resolve, reject) => {
+        db.query(query, values, (err, result) => {
+            if (err) reject(err);
+            console.log(result);
+            resolve();
+        });
+    });
+}
+
+
+
+
+
+// Function to get user input
+const getUserInput = (question) => {
+    return new Promise((resolve) => {
+        rl.question(question, (answer) => {
+            resolve(answer);
+        });
+    });
+}
+
+
+// Function to ask the user which operation they want to perform
+const askOperation = async () => {
+    const operation = await getUserInput("C for Create, R for Retrieve, U for Update, D for Delete:");
+    switch(operation.toUpperCase()) {
+        case 'C':
+            await insertCustomer(client);
+            break;
+        case 'R':
+            await findCustomer(client);
+            break;
+        case 'U':
+            await updateCustomer(client);
+            break;
+        case 'D':
+            await deleteCustomer(client);
+            break;
+        case 'ADMIN':
+            await admin(client);
+            break;
+        default:
+            console.log("Enter C, R, U or D again Invalid.");
+            await askOperation();  // Ask again
+    }
+}
+
+
+//New user:
+async function insertCustomer(client)
+{
+    const Title = await getUserInput("Enter Title: ");
+    const First_Name = await getUserInput("Enter First_Name*: ");
+    const Last_Name = await getUserInput("Enter Last_Name*: ");
+    const Mobile = await getUserInput("Enter Mobile*: ");
+    const Email = await getUserInput("Enter Email*: ");
+    const Home_Address_Line_1 = await getUserInput("Enter Home_Address_Line_1*: ");
+    const Home_Address_Line_2 = await getUserInput("Enter Home_Address_Line_2: ");
+    const Home_Town = await getUserInput("Enter Home_Town*: ");
+    const Home_County_City = await getUserInput("Enter Home_County_City*: ");
+    const Home_Eircode = await getUserInput("Enter Home_Eircode: ");
+    const shipqhome = await getUserInput("Is your shipping address same as your home address? (Y for Yes, N for No): ");
+    let Ship_Address_Line_1, Ship_Address_Line_2, Ship_Town, Ship_County_City, Ship_Eircode;
+
+    if(shipqhome.toUpperCase() === 'Y')
+    {
+        Ship_Address_Line_1 = Home_Address_Line_1;
+        Ship_Address_Line_2 = Home_Address_Line_2;
+        Ship_Town = Home_Town;
+        Ship_County_City = Home_County_City;
+        Ship_Eircode = Home_Eircode;
+    }
+    else if(shipqhome.toUpperCase() === 'N')
+    {
+        Ship_Address_Line_1 = await getUserInput("Enter Ship_Address_Line_1*: ");
+        Ship_Address_Line_2 = await getUserInput("Enter Ship_Address_Line_2: ");
+        Ship_Town = await getUserInput("Enter Ship_Town*: ");
+        Ship_County_City = await getUserInput("Enter Ship_County_City*: ");
+        Ship_Eircode = await getUserInput("Enter Ship_Eircode: ");
+    }
+
+    //Check if required fields are not empty
+    if (!First_Name || !Last_Name || !Mobile || !Email || !Home_Address_Line_1 || !Home_Town || !Home_County_City || !Ship_Address_Line_1 || !Ship_Town || !Ship_County_City)
+    {
+        console.log("Info missing");
+        await insertCustomer(client);
+        return;
+    }
+
+
+
+    const newListing = 
+    {
+        "Title": Title,
+        "First_Name": First_Name,
+        "Last_Name": Last_Name,
+        "Mobile": {"$numberInt":Mobile},
+        "Email": Email,
+        "location":
+        {
+            "Home_Address": 
+            {
+                "Home_Address_1": Home_Address_Line_1,
+                "Home_Address_2": Home_Address_Line_2,
+                "Home_Town": Home_Town,
+                "Home_City": Home_County_City,
+                "Home_Eircode": Home_Eircode
+            },
+            "Shipping_Address": 
+            {
+                "Shipping_Address1": Ship_Address_Line_1,
+                "Shipping_Address2": Ship_Address_Line_2,
+                "Shipping_Town": Ship_Town,
+                "Shipping_City": Ship_County_City,
+                "Shipping_Eircode": Ship_Eircode
+            }
+        }
+    };
+    const result = await client.db("Store").collection("Customer_info").insertOne(newListing);
+
+    console.log(`new listing created with the id: ${result.insertedId}`);
+
+    await Purchases(client, result);  // Ask for purchasing
+}
+
+
+async function showAvailablePhones(client) {
+    const availablePhones = await client.db("Store").collection("Items").find().toArray();
+    console.log("Available Phones:");
+    availablePhones.forEach(phone => console.log(`Manufacturer: ${phone.Manufacturer}, Model: ${phone.Model}, Price: ${phone.Price}`));
+}
+
+async function Purchases(client, result) {
+    let continuePurchasing = true;
+
+    while (continuePurchasing) {
+        await showAvailablePhones(client);
+
+        const selectedNumber = await getUserInput("Enter the number of the phone you want to purchase (or enter '0' to cancel): ");
+
+        if (selectedNumber === '0') {
+            continuePurchasing = false;
+            continue;
+        }
+
+        const number = parseInt(selectedNumber);
+        if (isNaN(number) || number < 1) {
+            console.log("Invalid input. Please enter a valid number.");
+            continue;
+        }
+
+        const availablePhones = await client.db("Store").collection("Items").find().toArray();
+
+        if (number > availablePhones.length) {
+            console.log("Invalid selection. Please choose a number within the range.");
+            continue;
+        }
+
+        const selectedPhone = availablePhones[number - 1];
+
+        // Construct the item object with price
+        const item = { Manufacturer: selectedPhone.Manufacturer, Model: selectedPhone.Model, Price: selectedPhone.Price };
+
+        // Call createPurchase function with the item object
+        await createPurchase(client, result.insertedId, [item]);
+
+        const answer = await getUserInput("Do you want to purchase another phone? (Y for Yes, N for No): ");
+        if (answer.toUpperCase() === 'N') {
+            continuePurchasing = false;
+        }
+    }
+
+    await askOperation(); // After purchasing loop ends, return to main operation menu
+}
+
+
+
+
+
+
+async function createPurchase(client, customerId, items) {
+    // Retrieve the objectIds of the items being purchased
+    const itemDetails = await Promise.all(items.map(async item => {
+        const phone = await client.db("Store").collection("Items").findOne({ Manufacturer: item.Manufacturer, Model: item.Model });
+        if (!phone) {
+            throw new Error(`Phone not found in the store: ${item.Manufacturer} ${item.Model}`);
+        }
+        return { _id: phone._id, Manufacturer: phone.Manufacturer, Model: phone.Model, Price: phone.Price };
+    }));
+
+    // Create the purchase object
+    const purchase = {
+        customerId: customerId,
+        items: itemDetails, // Include the itemDetails in the purchase object
+        date: new Date()
+    };
+
+    // Call insertPurchase function where needed
+    await insertPurchase(client, purchase);
+}
+
+async function insertPurchase(client, purchase) {
+    const result = await client.db("Store").collection("Purchases").insertOne(purchase);
+    console.log(`New purchase created with the id: ${result.insertedId}`);
+}
+
+
+
+
+
+//FIND customer
+async function findCustomer(client) {
+    const Email = await getUserInput("Enter Email of the customer you want to find: ");
+
+    const customer = await client.db("Store").collection("Customer_info").findOne({ Email: Email });
+
+    if (!customer) {
+        console.log(`No customer found with email ${Email}`);
+        await askOperation();
+    }
+
+    console.log(`Customer information for email ${Email}:`);
+    console.log("-".repeat(30));
+    console.log(`Title: ${customer.Title}`);
+    console.log(`First Name: ${customer.First_Name}`);
+    console.log(`Last Name: ${customer.Last_Name}`);
+    console.log(`Mobile: ${customer.Mobile}`);
+    console.log(`Email: ${customer.Email}`);
+    console.log(" ");
+    console.log("Home Address:");
+    console.log(`  Home Address 1: ${customer.location.Home_Address.Home_Address_1}`);
+    console.log(`  Home Address 2: ${customer.location.Home_Address.Home_Address_2}`);
+    console.log(`  Home Town: ${customer.location.Home_Address.Home_Town}`);
+    console.log(`  Home City: ${customer.location.Home_Address.Home_City}`);
+    console.log(`  Home Eircode: ${customer.location.Home_Address.Home_Eircode}`);
+    console.log(" ");
+    console.log("Shipping Address:");
+    console.log(`  Shipping Address 1: ${customer.location.Shipping_Address.Shipping_Address1}`);
+    console.log(`  Shipping Address 2: ${customer.location.Shipping_Address.Shipping_Address2}`);
+    console.log(`  Shipping Town: ${customer.location.Shipping_Address.Shipping_Town}`);
+    console.log(`  Shipping City: ${customer.location.Shipping_Address.Shipping_City}`);
+    console.log(`  Shipping Eircode: ${customer.location.Shipping_Address.Shipping_Eircode}`);
+    console.log("-".repeat(30));
+
+    await listPurchases(client, customer);
+}
+
+async function listPurchases(client, results) {
+    const answer = await getUserInput("Do you want to list purchases? (Y for Yes, N for No): ");
+
+    if (answer.toUpperCase() === 'Y') {
+        console.log(`Searching for userId: ${results._id}`);
+
+        const allPurchases = await client.db("Store").collection("Purchases").find({ customerId: results._id }).toArray();
+        console.log("Purchases:");
+
+        allPurchases.forEach((purchase, index) => {
+            console.log(`Purchase ${index + 1}:`);
+            console.log(`- Date: ${purchase.date}`);
+            console.log(`- Customer ID: ${purchase.customerId}`);
+            console.log("  Items:");
+            purchase.items.forEach((item, i) => {
+                
+                    console.log(`    ${i + 1}. Manufacturer: ${item.Manufacturer}, Model: ${item.Model}, Price: ${item.Price}`);
+                
+            });
+            
+            console.log("\n");
+        });
+
+        await askOperation();
+    } else if (answer.toUpperCase() === 'N') {
+        await askOperation();
+    } else {
+        console.log("Invalid input. Please enter Y or N.");
+        await listPurchases(client, results);  // Ask again
+    }
+}
+
+
+
+
+
+
+async function updateCustomer(client)
+{
+    const Emails = await getUserInput("Enter Email of listing you want to update: ");
+
+    const wre = await client.db("Store").collection("Customer_info").findOne({Email:Emails});
+
+    if(!wre)
+    {
+        console.log(`No listing found with `+Emails);
+        await askOperation();
+    }
+
+    const Title = await getUserInput("Enter Title: ");
+    const First_Name = await getUserInput("Enter First_Name*: ");
+    const Last_Name = await getUserInput("Enter Last_Name*: ");
+    const Mobile = await getUserInput("Enter Mobile*: ");
+    const Email = await getUserInput("Enter Email*: ");
+    const Home_Address_Line_1 = await getUserInput("Enter Home_Address_Line_1*: ");
+    const Home_Address_Line_2 = await getUserInput("Enter Home_Address_Line_2: ");
+    const Home_Town = await getUserInput("Enter Home_Town*: ");
+    const Home_County_City = await getUserInput("Enter Home_County_City*: ");
+    const Home_Eircode = await getUserInput("Enter Home_Eircode: ");
+    const Ship_Address_Line_1 = await getUserInput("Enter Ship_Address_Line_1*: ");
+    const Ship_Address_Line_2 = await getUserInput("Enter Ship_Address_Line_2: ");
+    const Ship_Town = await getUserInput("Enter Ship_Town*: ");
+    const Ship_County_City = await getUserInput("Enter Ship_County_City*: ");
+    const Ship_Eircode = await getUserInput("Enter Ship_Eircode: ");
+
+    // Create an update object
+    let update = {};
+
+    // Only add fields to the update object if the corresponding input is not empty
+    if (Title) update["Title"] = Title;
+    if (First_Name) update["First_Name"] = First_Name;
+    if (Last_Name) update["Last_Name"] = Last_Name;
+    if (Mobile) update["Moblie"] = {"$numberInt":Mobile};
+    if (Email) update["Email"] = Email;
+    if (Home_Address_Line_1) update["location.Home_Address.Home_Address1"] = Home_Address_Line_1;
+    if (Home_Address_Line_2) update["location.Home_Address.Home_Address2"] = Home_Address_Line_2;
+    if (Home_Town) update["location.Home_Address.Home_Town"] = Home_Town;
+    if (Home_County_City) update["location.Home_Address.Home_City"] = Home_County_City;
+    if (Home_Eircode) update["location.Home_Address.Home_Eircode"] = Home_Eircode;
+    if (Ship_Address_Line_1) update["location.Shipping_Address.Shipping_Address1"] = Ship_Address_Line_1;
+    if (Ship_Address_Line_2) update["location.Shipping_Address.Shipping_Address2"] = Ship_Address_Line_2;
+    if (Ship_Town) update["location.Shipping_Address.Shipping_Town"] = Ship_Town;
+    if (Ship_County_City) update["location.Shipping_Address.Shipping_City"] = Ship_County_City;
+    if (Ship_Eircode) update["location.Shipping_Address.Shipping_Eircode"] = Ship_Eircode;
+
+    // Perform the update operation
+    const resultss = await client.db("Store").collection("Customer_info").updateOne({Email:Emails}, {$set: update});
+
+    console.log(resultss)
+
+    const resulta = await client.db("Store").collection("Customer_info").findOne({Email:Email});
+    console.log(resulta)
+
+    await askOperation();
+}
+
+
+
+
+async function deleteCustomer(client)
+{
+    const Emails = await getUserInput("Enter Email of listing you want to delete: ");
+
+    // Find the customer to get the id
+    const customer = await client.db("Store").collection("Customer_info").findOne({Email: Emails});
+
+    if(!customer)
+    {
+        console.log(`No customer found with `+Emails);
+        await askOperation();
+        return;
+    }
+
+    // Delete the customer
+    const resultt = await client.db("Store").collection("Customer_info").deleteOne({Email: Emails});
+    console.log(`Customer was deleted`);
+
+    // Delete all Purchases with the userId same as the id of the customer
+    const deleteResult = await client.db("Store").collection("Purchases").deleteMany({userId: new ObjectId(customer._id)});
+    console.log(`Deleted ${deleteResult.deletedCount} purchase(s) for the customer`);
+
+    await askOperation();
+}
+
+
+
+
+
+
+async function admin(client) {
+    while (true) {
+        const answer = await getUserInput("Do you want to list all customers? (Y for Yes, N for No): ");
+
+        if (answer.toUpperCase() === 'Y') {
+            const allCustomers = await client.db("Store").collection("Customer_info").find().toArray();
+            console.log("All customers:");
+            allCustomers.forEach(async (customer) => {
+                console.log(customer);
+                await listPurchases(client, customer);
+            });
+        } else if (answer.toUpperCase() === 'N') {
+            const changeItems = await getUserInput("Do you want to change items? (Y for Yes, N for No): ");
+
+            if (changeItems.toUpperCase() === 'Y') {
+                const manufacturer = await getUserInput("Enter the manufacturer: ");
+                const model = await getUserInput("Enter the model: ");
+                const price = await getUserInput("Enter the price: ");
+
+                // Check if required fields are not empty
+                if (!manufacturer || !model || !price) {
+                    console.log("Required fields are missing. Please try again.");
+                    continue;  // Ask again
+                }
+
+                const item = {
+                    Manufacturer: manufacturer,
+                    Model: model,
+                    Price: price
+                };
+
+                // Add the new item to the items collection
+                const result = await client.db("Store").collection("Items").insertOne(item);
+                console.log(`New item created with the id: ${result.insertedId}`);
+            } else if (changeItems.toUpperCase() === 'N') {
+                await askOperation();
+                break;
+            } else {
+                console.log("Invalid input. Please enter Y or N.");
+                continue;  // Ask again
+            }
+        } else {
+            console.log("Invalid input. Please enter Y or N.");
+            continue;  // Ask again
+        }
+    }
+}
+
+connect();
+
+app.listen(3000, () => {
+    console.info("Serevr on port 3000");
+});
